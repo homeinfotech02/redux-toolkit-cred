@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [editPreFillData, setEditPreFillData] = useState({});
 
   const dispatch = useDispatch();
-  const displayUsers = useSelector((state) => state.credForm.usersData);
+  const { fname, mobile, email, usersData: displayUsers } = useSelector((state) => state.credForm);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -93,21 +93,21 @@ const Dashboard = () => {
           {/* Full Name */}
           <div className="form-group">
             <label htmlFor="fname">Full Name:</label>
-            <input type="text" id="fname" name="fname" required onChange={handleChange} />
+            <input type="text" id="fname" name="fname" required onChange={handleChange} value={fname} />
           </div>
           <br />
 
           {/* Mobile */}
           <div className="form-group">
             <label htmlFor="mobile">Mobile Number:</label>
-            <input type="tel" id="mobile" name="mobile" onChange={handleChange} required />
+            <input type="tel" id="mobile" name="mobile" onChange={handleChange} required value={mobile} />
           </div>
           <br />
 
           {/* Email */}
           <div className="form-group">
             <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" onChange={handleChange} required />
+            <input type="email" id="email" name="email" onChange={handleChange} required value={email} />
           </div>
           <br />
 
@@ -120,7 +120,7 @@ const Dashboard = () => {
       {/* Modal for Edit */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg w-96 p-6 relative">
+          <div className="bg-[#434343] rounded-lg shadow-lg w-96 p-6 relative">
             <h2 className="text-xl font-bold mb-4">Edit User Data</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
