@@ -6,21 +6,38 @@ export const credFormSlice = createSlice({
         fname: "",
         mobile: "",
         email: "",
+        password: "",
+        cPassword: "",
+        gender: "",
+        hobbies: [],
         usersData: [],
     },
     reducers: {
         setFormField: (state, action) => {
             const { field, value } = action.payload;
-            state[field] = value;
+            if (field === "hobbies") {
+                if (state.hobbies.includes(value)) {
+                    // Remove hobby if already selected
+                    state.hobbies = state.hobbies.filter((hobby) => hobby !== value);
+                } else {
+                    // Add hobby if not already selected
+                    state.hobbies.push(value);
+                }
+            } else {
+                state[field] = value;
+            }
         },
 
         addData: (state) => {
-            const { fname, mobile, email } = state;
+            const { fname, mobile, email, password, gender, hobbies } = state;
             const newEntry = {
                 id: Date.now(), // Generate unique ID
                 fname,
                 mobile,
                 email,
+                password,
+                gender,
+                hobbies
             };
             state.usersData.push(newEntry);
         },
@@ -29,6 +46,10 @@ export const credFormSlice = createSlice({
             state.fname = '';
             state.mobile = '';
             state.email = '';
+            state.password = '';
+            state.cPassword = '';
+            state.gender = '';
+            state.hobbies = [];
         },
 
         deleteUserData: (state, action) => {
@@ -36,10 +57,10 @@ export const credFormSlice = createSlice({
         },
 
         editUserData: (state, action) => {
-            const { id, fname, mobile, email } = action.payload;
+            const { id, fname, mobile, email, password, gender, hobbies } = action.payload;
             const userIndex = state.usersData.findIndex(user => user.id === id);
             if (userIndex !== -1) {
-                state.usersData[userIndex] = { id, fname, mobile, email };
+                state.usersData[userIndex] = { id, fname, mobile, email, password, gender, hobbies :hobbies || [] };
             }
         },
     }
